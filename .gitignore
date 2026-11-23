@@ -1,0 +1,12 @@
+node_modules
+
+# Production builds
+build/
+dist/
+out/
+.next/
+
+# Environment variables & secrets
+.env
+
+package-lock.json

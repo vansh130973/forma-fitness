@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#152a27" />
+  <meta name="description" content="Forma, your personal MongoDB-backed vegetarian diet, workout and progress dashboard." />
+  <title>Forma | Diet & Fitness Manager</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section id="auth-screen" class="auth-screen" aria-label="Private sign in">
+    <div class="auth-panel">
+      <div class="auth-brand"><span class="auth-logo">✳</span><span>forma<span class="brand-dot">.</span></span></div>
+      <div class="auth-icon">🌱</div>
+      <p class="eyebrow">YOUR PRIVATE WELLNESS SPACE</p>
+      <h1>Welcome back.</h1>
+      <p class="auth-description">Your nutrition, workouts and body measurements, securely saved in MongoDB.</p>
+      <form id="login-form" class="auth-form">
+        <label for="app-password">Fitness account password</label>
+        <input id="app-password" type="password" name="password" autocomplete="current-password" required minlength="12" placeholder="Enter your private password" />
+        <button id="login-button" type="submit">Unlock my dashboard ↗</button>
+      </form>
+      <p id="auth-message" class="auth-message" aria-live="polite">Connecting to your private server…</p>
+      <button id="retry-connection" class="auth-retry" type="button" hidden>Retry connection</button>
+      <p class="auth-footnote">Your MongoDB connection credentials never appear in the browser.</p>
+    </div>
+  </section>
+  <div class="app-shell hidden" id="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#dashboard"><span class="brand-icon" aria-hidden="true">✳</span><span>forma<span class="brand-dot">.</span><small>YOUR WELLNESS SPACE</small></span></a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="side-nav" id="side-nav">
+        <a href="#dashboard" data-nav="dashboard"><span class="nav-symbol">◫</span> Overview</a>
+        <a href="#diet" data-nav="diet"><span class="nav-symbol">◉</span> Diet planner</a>
+        <a href="#recipes" data-nav="recipes"><span class="nav-symbol">▤</span> Recipe library</a>
+        <a href="#workouts" data-nav="workouts"><span class="nav-symbol">⌁</span> Workout planner</a>
+        <a href="#progress" data-nav="progress"><span class="nav-symbol">↗</span> My progress</a>
+        <a href="#reports" data-nav="reports"><span class="nav-symbol">▥</span> Weekly reports</a>
+      </nav>
+      <div class="sidebar-label sidebar-label-bottom">PREFERENCES</div>
+      <nav class="side-nav"><a href="#settings" data-nav="settings"><span class="nav-symbol">⚙</span> Settings & data</a></nav>
+      <div class="sidebar-fill"></div>
+      <div class="sidebar-coach"><div class="coach-star">✳</div><div class="coach-heading">Small steps.<br>Stronger you.</div><p>Consistency beats perfection. Keep showing up.</p><span>YOUR 8-WEEK FOCUS ↗</span></div>
+      <div class="sidebar-footer"><span class="avatar">F</span><div><strong>My fitness journey</strong><small>Beginner · Vegetarian</small></div></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div class="topbar-left"><span class="breadcrumb" id="breadcrumb">Overview</span><span class="topbar-divider">/</span><span class="breadcrumb-current" id="crumb-current">Dashboard</span></div><div class="topbar-right"><span class="local-status" id="sync-status"><span class="status-dot"></span> Connecting…</span><button class="sync-retry hidden" id="sync-retry" type="button" data-action="retry-sync">Retry sync</button><button class="logout-button" type="button" data-action="logout" title="Sign out of Forma">Sign out</button><button class="small-today" type="button" data-action="today">Today ↗</button><span class="header-avatar">F</span></div></header>
+      <div id="view" class="page-content" aria-live="polite"></div>
+      <footer class="app-footer">Forma is a personal planning tool. Nutrition values are estimates, not medical advice. Exercise safely and ask your gym coach to check technique.</footer>
+    </main>
+  </div>
+  <nav class="mobile-bottom" aria-label="Mobile navigation"><a href="#dashboard" data-nav="dashboard"><span>◫</span>Home</a><a href="#diet" data-nav="diet"><span>◉</span>Diet</a><a href="#workouts" data-nav="workouts"><span>⌁</span>Workout</a><a href="#progress" data-nav="progress"><span>↗</span>Progress</a><a href="#reports" data-nav="reports"><span>▥</span>Reports</a></nav>
+  <div class="modal-overlay hidden" id="modal-overlay"><div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title" id="modal-dialog"></div></div>
+  <div class="toast-root" id="toast-root" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
