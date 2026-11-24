@@ -107,3 +107,15 @@ Use `NODE_ENV=production` for HTTPS deployments. Configure automatic TLS certifi
 - Settings: nutrition goal edits, JSON export/import, reset and retry failed MongoDB synchronization
 
 _Nutrition values are estimates. This is not a substitute for clinical or in-person fitness guidance._
+
+## Render cloud deployment (updated)
+
+**Use `DEPLOY_RENDER.md` for exact steps.** This version fixes the original `.env`-dependent startup command. In Render, choose a Node web service, set `MONGO_URI`, `MONGO_DB_NAME`, `APP_PASSWORD`, and `NODE_ENV` as environment variables, and run `npm start`. An optional `render.yaml` Blueprint is provided. For local `.env` development use `npm run start:local`.
+
+## Workout catalogue update (24 November 2026)
+
+The Workout Planner now contains the requested exercises for Monday through Sunday. Cardio choices, strength exercise sets/reps/rest, optional higher-skill movements, and coach-led yoga/aerobics reference movements are shown by day. Workout logs, exercise load/repetition records, and class attendance continue to be saved by date using the existing authenticated MongoDB API. Demonstration links open external YouTube search results; they are not locally hosted videos.
+
+**Beginner safety:** although the requested target of three sets of 10–12 reps appears on many exercises, the site advises beginning with two sets of four to five main exercises for the first two weeks and adding volume gradually. Deadlifts, swings, burpees, bench dips, and thrusters are optional. For Tuesday, choose either the deadlift drill or goblet squat alternative. Instructor-led classes remain at the coach's discretion.
+
+Redeploy to Render by replacing your GitHub repository files with these updated files, committing, and pushing to the deployed branch. No MongoDB schema migration or environment variable changes are required.

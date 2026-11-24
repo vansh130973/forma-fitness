@@ -4,13 +4,14 @@
   "private": true,
   "description": "Private diet and fitness manager with MongoDB Atlas persistence",
   "engines": {
-    "node": ">=20.12"
+    "node": ">=22.0.0 <23.0.0"
   },
   "scripts": {
-    "start": "node --env-file=.env server.js",
+    "start": "node server.js",
     "dev": "node --env-file=.env --watch server.js",
     "test": "node --test tests/*.test.js",
-    "check": "node --check server.js && node --check server/app-server.js && node --check server/state.js && node --check public/app.js && node --check public/data.js"
+    "check": "node --check server.js && node --check server/app-server.js && node --check server/state.js && node --check public/app.js && node --check public/data.js",
+    "start:local": "node --env-file=.env server.js"
   },
   "dependencies": {
     "mongodb": "^6.21.0"

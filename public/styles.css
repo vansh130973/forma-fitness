@@ -30,3 +30,6 @@
 .local-status.sync-saving{color:#907e4b}.local-status.sync-saving .status-dot{background:#e5b756}
 @media(max-width:780px){.auth-panel{padding:27px 23px}.topbar .logout-button{padding:6px;font-size:10px}.topbar .local-status{font-size:9px}.topbar .sync-retry{font-size:9px}.auth-panel h1{font-size:32px}}
 @media(max-width:440px){.topbar-right{gap:6px}.topbar .header-avatar{display:none}.auth-screen{padding:12px}}
+
+/* Optional instructor-led pose and recovery movement reference list */
+.class-moves{margin:20px 0 18px}.class-moves h4{margin:0 0 12px;font-size:13px;color:#315740}.class-move-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px}.class-move{padding:13px;background:#f5f9f1;border:1px solid #e1ebdc;border-radius:12px;display:flex;flex-direction:column;gap:5px}.class-move strong{font-size:12px;color:#274c36}.class-move span{font-size:11px;line-height:1.55;color:#688272}.class-move a{font-size:11px;font-weight:700;color:#3d8352;margin-top:auto;padding-top:8px}.class-move a:hover{text-decoration:underline}
