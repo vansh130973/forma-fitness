@@ -119,3 +119,7 @@ The Workout Planner now contains the requested exercises for Monday through Sund
 **Beginner safety:** although the requested target of three sets of 10–12 reps appears on many exercises, the site advises beginning with two sets of four to five main exercises for the first two weeks and adding volume gradually. Deadlifts, swings, burpees, bench dips, and thrusters are optional. For Tuesday, choose either the deadlift drill or goblet squat alternative. Instructor-led classes remain at the coach's discretion.
 
 Redeploy to Render by replacing your GitHub repository files with these updated files, committing, and pushing to the deployed branch. No MongoDB schema migration or environment variable changes are required.
+
+## React Native Android app support (November 25, 2026)
+
+Native devices use `POST /api/mobile/login` to obtain a seven-day bearer token. They call the same authenticated `/api/state` GET/PUT routes used by the website, using the `Authorization: Bearer <token>` header and `X-Forma-Request: 1`. Native logout is `POST /api/mobile/logout`, and `GET /api/mobile/session` checks the token. The existing web cookie-authentication routes are unchanged. Tokens are random and hashed in `fitness_sessions` (TTL expiry). Never expose `MONGO_URI` in mobile source. Redeploy this backend before signing in from the React Native app.

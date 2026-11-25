@@ -47,6 +47,11 @@ function sameOrigin(req){
  try{return new URL(origin).host===req.headers.host;}
  catch{return false;}
 }
+function bearerToken(req){
+ const value=req.headers.authorization||'';
+ const match=/^Bearer ([A-Za-z0-9_-]{43})$/.exec(value);
+ return match?match[1]:'';
+}
 function safeCompare(a,b){
  const x=crypto.createHash('sha256').update(String(a)).digest();
  const y=crypto.createHash('sha256').update(String(b)).digest();
@@ -65,14 +70,14 @@ function createAppServer({repository,appPassword,production=false}){
    const p=new URL(req.url||'/', 'http://localhost').pathname;
    try{
      if(req.method==='GET'&&p==='/api/health')return send(res,200,{status:'ok'});
-     if(req.method==='GET'&&p==='/api/auth/session'){
-       const token=cookieValue(req,'forma_session');
+     if(req.method==='GET'&&(p==='/api/auth/session'||p==='/api/mobile/session')){
+       const token=p==='/api/mobile/session'?bearerToken(req):cookieValue(req,'forma_session');
        const authenticated=Boolean(token&&/^[A-Za-z0-9_-]{43}$/.test(token)&&await repository.hasSession(token));
        return send(res,200,{authenticated});
      }
      if(req.method==='POST'){
        if(!sameOrigin(req))return send(res,403,{error:'Invalid request origin'});
-       if(p==='/api/auth/login'){
+       if(p==='/api/auth/login'||p==='/api/mobile/login'){
          const key=req.socket.remoteAddress||'unknown',now=Date.now();
          let record=attempts.get(key);
          if(!record||record.until<=now)record={count:0,until:now+15*60*1000};
@@ -85,16 +90,17 @@ function createAppServer({repository,appPassword,production=false}){
          attempts.delete(key);
          const token=crypto.randomBytes(32).toString('base64url');
          await repository.createSession(token,new Date(Date.now()+WEEK_MS));
+         if(p==='/api/mobile/login')return send(res,200,{authenticated:true,token,expiresIn:7*24*60*60});
          return send(res,200,{authenticated:true},{'Set-Cookie':secureCookie(token,production)});
        }
-       if(p==='/api/auth/logout'){
-         const token=cookieValue(req,'forma_session');
+       if(p==='/api/auth/logout'||p==='/api/mobile/logout'){
+         const token=p==='/api/mobile/logout'?bearerToken(req):cookieValue(req,'forma_session');
          if(token)await repository.deleteSession(token);
-         return send(res,200,{authenticated:false},{'Set-Cookie':clearCookie(production)});
+         return p==='/api/mobile/logout'?send(res,200,{authenticated:false}):send(res,200,{authenticated:false},{'Set-Cookie':clearCookie(production)});
        }
      }
      if(p.startsWith('/api/')){
-       const token=cookieValue(req,'forma_session');
+       const token=bearerToken(req)||cookieValue(req,'forma_session');
        if(!token||!/^[A-Za-z0-9_-]{43}$/.test(token)||!await repository.hasSession(token)){
          return send(res,401,{error:'Sign in to access your fitness records'});
        }
